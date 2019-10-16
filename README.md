@@ -5,6 +5,7 @@ personal z shell configuration
   * install zsh from repository and follow *arch wiki* to make it default.
   * install **oh my zsh** by following instructions on their website.
   * then copy the theme and bashrc to the **$ZSH/themes/** and home directory respectively.
+  * then copy the **zsh-syntax-highlighting** folder to the **$ZSH/plugins/** directory.
 
 ## note as per present understanding
   * the PROMPT color and shortcuts are taken from oh-my-zsh configuration automatically.
