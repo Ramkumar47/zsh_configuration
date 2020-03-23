@@ -99,4 +99,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias xclips="xclip -selection \"clipboard\""
 alias feh="feh -ZGd --draw-tinted"
+alias temp="mkdir -p ~/Working_Directory/temp && cd ~/Working_Directory/temp/"
+alias wd="mkdir -p ~/Working_Directory && cd ~/Working_Directory/"
+
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
