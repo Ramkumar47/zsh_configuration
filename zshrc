@@ -68,7 +68,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-pages catimg emacs rsync sudo) 
+plugins=(git colored-man-pages)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -103,3 +103,17 @@ alias temp="mkdir -p ~/Working_Directory/temp && cd ~/Working_Directory/temp/"
 alias wd="mkdir -p ~/Working_Directory && cd ~/Working_Directory/"
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+
+# vim binding key
+bindkey -v
+
+# function to display the vim mode in RPROMPT
+function zle-line-init zle-keymap-select {
+    RPS1="[%{$fg[blue]%}%*%{$reset_color%}]${${KEYMAP/vicmd/-N-}/(main|viins)/-I-}"
+    RPS2=$RPS1
+    # RPROMPT='[%{$fg[blue]%}%*%{$reset_color%}]'
+    zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
