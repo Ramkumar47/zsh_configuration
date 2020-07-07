@@ -123,3 +123,25 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# vim mode plugin for zsh..
+# https://github.com/softmoth/zsh-vim-mode
+# following commands can be followed
+# mkdir -p $ZSH/plugins/zsh-vim-mode
+# git clone https://github.com/softmoth/zsh-vim-mode $ZSH/plugins/zsh-vim-mode/
+source "$ZSH/plugins/zsh-vim-mode/zsh-vim-mode.plugin.zsh"
+
+# lines to enable zle-history search as vim mode disables it
+autoload -Uz history-search-end
+
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+
+bindkey -M vicmd '^[[A' history-beginning-search-backward-end \
+                 '^[OA' history-beginning-search-backward-end \
+                 '^[[B' history-beginning-search-forward-end \
+                 '^[OB' history-beginning-search-forward-end
+bindkey -M viins '^[[A' history-beginning-search-backward-end \
+                 '^[OA' history-beginning-search-backward-end \
+                 '^[[B' history-beginning-search-forward-end \
+                 '^[OB' history-beginning-search-forward-end

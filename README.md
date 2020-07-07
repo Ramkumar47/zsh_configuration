@@ -10,6 +10,10 @@ personal z shell configuration
   * go with classic prompt style with unicode support and darkest color with many icons to get your favourite look.
   * that will modify the zshrc file according to the configuration chosen and powerline10k theme will be installed.
   * install **zsh-syntax-highlighting** pack from repository and source it (by default it is sourced in zshrc file itself)
+  * then install vim keybinding plugin by using the command below
+> mkdir -p $ZSH/plugins/zsh-vim-mode
+> git clone https://github.com/softmoth/zsh-vim-mode $ZSH/plugins/zsh-vim-mode/
+  * this installs vim mode for the terminal commands.
 
 ## note
   * the PROMPT color and shortcuts are taken from oh-my-zsh configuration automatically.
