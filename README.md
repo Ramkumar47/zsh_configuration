@@ -19,4 +19,4 @@ personal z shell configuration
   * the PROMPT color and shortcuts are taken from oh-my-zsh configuration automatically.
   * the foreground and background of commands typed on terminal is only configured by terminal configurations, so does other terminal options like transparency.
   * the foreground and background colors like on pacman search are governed by terminal configurations only.
-
+  * global variables such as TERMINAL and EDITOR are defined in the *zprofile* file
