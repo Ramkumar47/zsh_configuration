@@ -5,11 +5,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# for powerline theme to work properly
-export LANG=en_US.UTF-8
-
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/ramkumar/.oh-my-zsh"
@@ -17,13 +14,12 @@ export ZSH="/home/ramkumar/.oh-my-zsh"
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# ZSH_THEME="ram2"
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
@@ -44,18 +40,20 @@ DISABLE_AUTO_UPDATE="true"
 # export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
+# DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-DISABLE_AUTO_TITLE="true" # because urxvt in i3wm doesnt have a terminal title
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
+# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
 COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -75,8 +73,8 @@ COMPLETION_WAITING_DOTS="true"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git colored-man-pages)
@@ -91,14 +89,17 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='mvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
+
+# custom Prompt variables definition
+export OpenFOAM_STATE=false # used for prompt element
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -112,36 +113,34 @@ alias xclips="xclip -selection \"clipboard\""
 alias feh="feh -ZGd --draw-tinted"
 alias temp="mkdir -p ~/Working_Directory/temp && cd ~/Working_Directory/temp/"
 alias wd="mkdir -p ~/Working_Directory && cd ~/Working_Directory/"
-
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# termite configuration
-if [[ $TERM == xterm-termite ]]; then
-  . /etc/profile.d/vte.sh
-  __vte_osc7
-fi
+alias ac="conda activate base"
+alias dac="conda deactivate"
+alias of="source /opt/OpenFOAM-v2012/OpenFOAM-v2012/etc/bashrc; echo \"OpenFOAM initiated\"; export OpenFOAM_STATE=true"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# vim mode plugin for zsh..
-# https://github.com/softmoth/zsh-vim-mode
-# following commands can be followed
-# mkdir -p $ZSH/plugins/zsh-vim-mode
-# git clone https://github.com/softmoth/zsh-vim-mode $ZSH/plugins/zsh-vim-mode/
-source "$ZSH/plugins/zsh-vim-mode/zsh-vim-mode.plugin.zsh"
 
-# lines to enable zle-history search as vim mode disables it
-autoload -Uz history-search-end
+# zsh syntax highlighting source
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
+# vim mode source
+source /home/ramkumar/.oh-my-zsh/plugins/zsh-vim-mode/zsh-vim-mode.plugin.zsh
 
-bindkey -M vicmd '^[[A' history-beginning-search-backward-end \
-                 '^[OA' history-beginning-search-backward-end \
-                 '^[[B' history-beginning-search-forward-end \
-                 '^[OB' history-beginning-search-forward-end
-bindkey -M viins '^[[A' history-beginning-search-backward-end \
-                 '^[OA' history-beginning-search-backward-end \
-                 '^[[B' history-beginning-search-forward-end \
-                 '^[OB' history-beginning-search-forward-end
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/ramkumar/Software/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/ramkumar/Software/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/ramkumar/Software/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/ramkumar/Software/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+# setting varaiables
+export EDITOR=/usr/bin/gvim
